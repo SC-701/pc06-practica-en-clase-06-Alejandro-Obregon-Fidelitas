@@ -12,7 +12,7 @@ name: Build and deploy Web App
 
 env:
   AZURE_WEBAPP_NAME: web-vehiculo    # Change this to your Azure Web App name
-  AZURE_WEBAPP_PACKAGE_PATH: 'Vehiculos.Web/Web'
+  AZURE_WEBAPP_PACKAGE_PATH: 'Vehiculos.WEB/Web'
   DOTNET_VERSION: '8.0'
 
 on:
@@ -44,19 +44,19 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Restore dependencies
-        run: dotnet restore "Vehiculos.Web"
+        run: dotnet restore "Vehiculos.WEB"
 
       - name: Build with dotnet
         run: |
-          dotnet build "Vehiculos.Web/Abstracciones/Abstracciones.csproj" --configuration Release --no-restore
-          dotnet build "Vehiculos.Web/Reglas/Reglas.csproj" --configuration Release --no-restore
-          dotnet build "Vehiculos.Web/Web/Web.csproj" --configuration Release --no-restore
+          dotnet build "Vehiculos.WEB/Abstracciones/Abstracciones.csproj" --configuration Release --no-restore
+          dotnet build "Vehiculos.WEB/Reglas/Reglas.csproj" --configuration Release --no-restore
+          dotnet build "Vehiculos.WEB/Web/Web.csproj" --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test "Vehiculos.Web" --no-restore --verbosity normal --configuration Release || echo "No tests found or test execution failed"
+        run: dotnet test "Vehiculos.WEB" --no-restore --verbosity normal --configuration Release || echo "No tests found or test execution failed"
 
       - name: dotnet publish
-        run: dotnet publish "Vehiculos.Web/Web/Web.csproj" -c Release -o ./publish --no-restore
+        run: dotnet publish "Vehiculos.WEB/Web/Web.csproj" -c Release -o ./publish --no-restore
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
